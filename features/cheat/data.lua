@@ -1,0 +1,1 @@
+-- Cheat feature has no prototypes; it only registers a console command in control.lua.
