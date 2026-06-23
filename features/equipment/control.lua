@@ -182,6 +182,40 @@ local function on_elem_changed(event)
   update_slot(player)
 end
 
+-- Cycle the equipped pickaxe through owned NORMAL-quality tiers:
+-- none -> lowest owned -> ... -> highest owned -> none.
+local function on_cycle(event)
+  local player = game.get_player(event.player_index)
+  if not player then return end
+  storage.equipped = storage.equipped or {}
+  local idx = player.index
+  local old = storage.equipped[idx]
+  local cur_tier = old and logic.tier_of(old.name) or 0
+
+  local function set_tier(tier)
+    if old then give_one(player, old.name, old.quality) end
+    if tier then
+      remove_one(player, item_for_tier(tier), "normal")
+      storage.equipped[idx] = { name = item_for_tier(tier), quality = "normal" }
+    else
+      storage.equipped[idx] = nil
+    end
+    recompute_force(player.force)
+    update_slot(player)
+  end
+
+  for step = 1, 4 do
+    local t = (cur_tier + step) % 4 -- 0..3
+    if t == 0 then
+      set_tier(nil)
+      return
+    elseif count_owned(player, item_for_tier(t), "normal") > 0 then
+      set_tier(t)
+      return
+    end
+  end
+end
+
 return {
   on_init = setup,
   on_configuration_changed = setup,
@@ -190,5 +224,6 @@ return {
     [defines.events.on_player_joined_game] = on_player_setup,
     [defines.events.on_player_main_inventory_changed] = on_inventory_changed,
     [defines.events.on_gui_elem_changed] = on_elem_changed,
+    ["bertorio-cycle-pickaxe"] = on_cycle,
   },
 }
