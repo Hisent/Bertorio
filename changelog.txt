@@ -13,7 +13,9 @@ Date: 2026-06-23
   Changes:
     - The equip chooser only lists pickaxe tiers you currently own.
     - Pickaxes no longer stack (stack size 1).
-    - Slightly raised default drop chances (Alloy 0.04, Crystal 0.012).
+    - Drop chances are Alloy 0.04 (1/25), Crystal 0.01 (1/100).
+    - Guaranteed minimum drop: at least one material per ceil(1/chance) ore mined
+      (>=1 Alloy per 25 ore, >=1 Crystal per 100 ore), so bad RNG can't starve you.
   Graphics:
     - Custom tier icons for the three pickaxes and the two upgrade materials.
     - Mod thumbnail.

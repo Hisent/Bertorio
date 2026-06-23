@@ -61,7 +61,11 @@ All recipes are available from the start (no research).
 | Setting | Default | Meaning |
 |---------|---------|---------|
 | Pickaxe Alloy drop chance | 0.04 | chance per ore mined to drop an Alloy |
-| Pickaxe Crystal drop chance | 0.012 | chance per ore mined to drop a Crystal |
+| Pickaxe Crystal drop chance | 0.01 | chance per ore mined to drop a Crystal |
+
+A drop is also **guaranteed at least once per `ceil(1/chance)` ore** (a pity
+counter), so bad luck can't starve you: with the defaults that's ≥1 Alloy per
+25 ore and ≥1 Crystal per 100 ore.
 
 ## Console commands
 

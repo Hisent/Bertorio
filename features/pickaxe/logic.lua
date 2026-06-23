@@ -17,6 +17,13 @@ function logic.modifier_for(tier)
   return tier or 0
 end
 
+-- Pity threshold: guarantee a drop at least once per ceil(1/chance) ore.
+-- chance <= 0 disables drops entirely (returns math.huge -> never forced).
+function logic.pity_for(chance)
+  if not chance or chance <= 0 then return math.huge end
+  return math.ceil(1 / chance)
+end
+
 -- highest tier in a dense list (no nil holes); 0 if empty
 function logic.max_tier(tiers)
   local best = 0
