@@ -17,6 +17,12 @@ assert(logic.pity_for(0.5) == 2)
 assert(logic.pity_for(0) == math.huge)
 assert(logic.pity_for(nil) == math.huge)
 
+assert(logic.effective_tier(2, 0) == 2)
+assert(logic.effective_tier(2, 1) == 3)
+assert(logic.effective_tier(3, 2) == 3)
+assert(logic.effective_tier(0, 1) == 1)
+assert(logic.effective_tier(1, nil) == 1)
+
 assert(logic.max_tier({}) == 0)
 assert(logic.max_tier({1}) == 1)
 assert(logic.max_tier({1, 3, 2}) == 3)

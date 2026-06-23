@@ -24,6 +24,11 @@ function logic.pity_for(chance)
   return math.ceil(1 / chance)
 end
 
+-- Effective tier: a quality level counts as +1 tier, capped at Mk3.
+function logic.effective_tier(tier, qlevel)
+  return math.min((tier or 0) + (qlevel or 0), 3)
+end
+
 -- highest tier in a dense list (no nil holes); 0 if empty
 function logic.max_tier(tiers)
   local best = 0
