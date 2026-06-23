@@ -11,16 +11,15 @@ local function item(name, icon)
 end
 
 local G = "__bertorio__/features/pickaxe/graphics/"
-local B = "__base__/graphics/icons/"
 
 data:extend({
   -- pickaxe tiers (own tier-colored icons)
   item("bertorio-pickaxe-1", G .. "pickaxe-1.png"),
   item("bertorio-pickaxe-2", G .. "pickaxe-2.png"),
   item("bertorio-pickaxe-3", G .. "pickaxe-3.png"),
-  -- upgrade materials (reuse base icons)
-  item("bertorio-upgrade-material-1", B .. "advanced-circuit.png"),
-  item("bertorio-upgrade-material-2", B .. "processing-unit.png"),
+  -- upgrade materials (own icons)
+  item("bertorio-upgrade-material-1", G .. "material-1.png"),
+  item("bertorio-upgrade-material-2", G .. "material-2.png"),
 
   -- recipes (available from start)
   {
