@@ -19,6 +19,12 @@ onto. Built and tested against Factorio **2.0.77**.
   each find.
 - **`/bertorio-cheat`** — gives a test kit (100 iron plates + 50 Alloy +
   50 Crystal) so you can try everything without grinding.
+- **Stats window** — a top-left *Bertorio Stats* button shows ore mined,
+  materials collected, and your streak toward the next guaranteed drop.
+- **Cycle hotkey** — bind *Cycle Bertorio pickaxe* in Controls to swap tiers
+  without opening the character screen.
+- **Quality** — a pickaxe's quality level counts as +1 tier (capped at Mk3).
+- Per-tier speed and the pity guarantee are configurable in Map settings.
 - **Feature framework** — features are self-contained folders loaded from a
   registry; adding one is a folder + one line (see below).
 

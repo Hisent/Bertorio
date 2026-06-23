@@ -7,6 +7,10 @@ Date: 2026-06-23
     - Character-screen equip slot: the speed bonus applies only while a pickaxe is equipped.
     - Floating popup when an upgrade material drops while hand-mining.
     - /bertorio-cheat console command gives a test kit (100 iron plates + 50/50 materials).
+    - Quality counts as +1 pickaxe tier (capped at Mk3 speed).
+    - Configurable per-tier mining-speed and a pity on/off setting.
+    - Drop sound, live equip-slot bonus tooltip, cycle-equip hotkey.
+    - Stats window (top-left button): ore mined, materials collected, streaks.
   Bugfixes:
     - Equipping works when holding the pickaxe on the cursor, not only from the main inventory.
     - A returned pickaxe spills on the ground instead of being lost when the inventory is full.
