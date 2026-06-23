@@ -2,10 +2,13 @@
 -- The mining-speed modifier lives in the `equipment` feature.
 
 -- Floating "found" popup at the player (local = only that player sees it).
+-- Offset up to sit where the vanilla "+N item" pickup text appears (head height),
+-- not at the character's feet. ponytail: -1.5 tiles matches the vanilla pickup
+-- text; nudge if a future character model differs.
 local function notify(player, item_name)
   player.create_local_flying_text({
     text = { "bertorio.found-material", "[item=" .. item_name .. "]" },
-    position = player.position,
+    position = { player.position.x, player.position.y - 1.5 },
   })
 end
 
