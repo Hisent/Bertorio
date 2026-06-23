@@ -6,11 +6,6 @@ assert(logic.tier_of("bertorio-pickaxe-2") == 2)
 assert(logic.tier_of("bertorio-pickaxe-3") == 3)
 assert(logic.tier_of("iron-plate") == nil)
 
-assert(logic.modifier_for(0) == 0)
-assert(logic.modifier_for(1) == 1)
-assert(logic.modifier_for(3) == 3)
-assert(logic.modifier_for(nil) == 0)
-
 assert(logic.pity_for(0.04) == 25)
 assert(logic.pity_for(0.01) == 100)
 assert(logic.pity_for(0.5) == 2)

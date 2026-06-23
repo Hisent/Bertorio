@@ -12,11 +12,6 @@ function logic.tier_of(item_name)
   return logic.TIER_BY_ITEM[item_name]
 end
 
--- tier value doubles as the character_mining_speed_modifier (T1->+1.0 = 2x ...)
-function logic.modifier_for(tier)
-  return tier or 0
-end
-
 -- Pity threshold: guarantee a drop at least once per ceil(1/chance) ore.
 -- chance <= 0 disables drops entirely (returns math.huge -> never forced).
 function logic.pity_for(chance)

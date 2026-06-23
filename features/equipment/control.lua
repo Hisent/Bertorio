@@ -8,36 +8,57 @@ local function item_for_tier(tier)
   return tier and TIER_ITEMS[tier] or nil
 end
 
--- Count a pickaxe across main inventory AND the cursor (clicking the slot while
--- holding the item is the natural equip gesture).
-local function count_owned(player, name)
+local function quality_level(quality)
+  local proto = quality and prototypes.quality[quality]
+  return proto and proto.level or 0
+end
+
+-- Effective tier of an equipped entry {name, quality} (or nil) -> 0..3.
+local function eff_tier(eq)
+  if not eq then return 0 end
+  local t = logic.tier_of(eq.name)
+  if not t then return 0 end
+  return logic.effective_tier(t, quality_level(eq.quality))
+end
+
+-- manual_mining_speed_modifier for an effective tier 0..3, from settings.
+local function speed_for(tier)
+  if tier <= 0 then return 0 end
+  return settings.global["bertorio-speed-mk" .. tier].value
+end
+
+-- Count a pickaxe of a specific quality across main inventory AND the cursor.
+local function count_owned(player, name, quality)
+  local q = quality or "normal"
   local n = 0
   local inv = player.get_main_inventory()
-  if inv then n = n + inv.get_item_count(name) end
+  if inv then n = n + inv.get_item_count({ name = name, quality = q }) end
   local cs = player.cursor_stack
-  if cs and cs.valid_for_read and cs.name == name then n = n + cs.count end
+  if cs and cs.valid_for_read and cs.name == name and cs.quality.name == q then
+    n = n + cs.count
+  end
   return n
 end
 
--- Remove one pickaxe, preferring main inventory then the cursor.
-local function remove_one(player, name)
+local function remove_one(player, name, quality)
+  local q = quality or "normal"
   local inv = player.get_main_inventory()
-  if inv and inv.get_item_count(name) > 0 then
-    inv.remove({ name = name, count = 1 })
+  if inv and inv.get_item_count({ name = name, quality = q }) > 0 then
+    inv.remove({ name = name, count = 1, quality = q })
     return
   end
   local cs = player.cursor_stack
-  if cs and cs.valid_for_read and cs.name == name then
+  if cs and cs.valid_for_read and cs.name == name and cs.quality.name == q then
     cs.count = cs.count - 1
   end
 end
 
--- Give one pickaxe back; spill on the ground if the inventory is full (no loss).
-local function give_one(player, name)
-  if player.insert({ name = name, count = 1 }) == 0 then
+local function give_one(player, name, quality)
+  local q = quality or "normal"
+  if player.insert({ name = name, count = 1, quality = q }) == 0 then
     player.surface.spill_item_stack({
       position = player.position,
-      stack = { name = name, count = 1 },
+      stack = { name = name, count = 1, quality = q },
       enable_looted = true,
       force = player.force,
     })
@@ -50,20 +71,27 @@ local function get_button(player)
   return frame and frame[BUTTON] or nil
 end
 
--- Restrict the chooser to the pickaxe tiers the player currently has, and keep
--- the displayed value in sync with what is equipped.
+-- Restrict the chooser to owned tiers, sync the value + bonus tooltip.
 local function update_slot(player)
   local btn = get_button(player)
   if not btn then return end
   local names = {}
   for _, name in ipairs(TIER_ITEMS) do
-    if count_owned(player, name) > 0 then names[#names + 1] = name end
+    if count_owned(player, name, "normal") > 0 then names[#names + 1] = name end
   end
+  local eq = storage.equipped[player.index]
+  -- keep the equipped item selectable even if its only copy is now in the slot
+  if eq and not names[1] then names[1] = eq.name end
   btn.elem_filters = { { filter = "name", name = names } }
-  btn.elem_value = item_for_tier(storage.equipped[player.index])
+  btn.elem_value = eq and { name = eq.name, quality = eq.quality or "normal" } or nil
+  local t = eff_tier(eq)
+  if t > 0 then
+    btn.tooltip = { "bertorio.equip-bonus", math.floor(speed_for(t) * 100) }
+  else
+    btn.tooltip = { "bertorio.equip-hint" }
+  end
 end
 
--- Build (or rebuild) the relative GUI slot for one player. Idempotent.
 local function build_gui(player)
   if not player then return end
   local rel = player.gui.relative
@@ -80,7 +108,7 @@ local function build_gui(player)
   frame.add({
     type = "choose-elem-button",
     name = BUTTON,
-    elem_type = "item",
+    elem_type = "item-with-quality",
     elem_filters = { { filter = "name", name = {} } },
   })
   update_slot(player)
@@ -90,16 +118,13 @@ local function build_all()
   for _, player in pairs(game.players) do build_gui(player) end
 end
 
--- Force-wide modifier from the highest EQUIPPED tier across the force's players.
--- ponytail: set absolutely, clobbering other mods writing the same modifier.
 local function recompute_force(force)
   if not (force and force.valid) then return end
-  local tiers = {}
+  local effs = {}
   for _, player in pairs(force.players) do
-    local t = storage.equipped[player.index]
-    if t then tiers[#tiers + 1] = t end
+    effs[#effs + 1] = eff_tier(storage.equipped[player.index])
   end
-  force.manual_mining_speed_modifier = logic.modifier_for(logic.max_tier(tiers))
+  force.manual_mining_speed_modifier = speed_for(logic.max_tier(effs))
 end
 
 local function recompute_all()
@@ -127,36 +152,32 @@ local function on_elem_changed(event)
   if not player then return end
   storage.equipped = storage.equipped or {}
   local idx = player.index
-  local chosen = event.element.elem_value -- item name or nil
-  local old_tier = storage.equipped[idx]
+  local chosen = event.element.elem_value -- {name, quality} or nil
+  local old = storage.equipped[idx]
 
-  -- Unequip: return previously equipped pickaxe.
   if chosen == nil then
-    if old_tier then give_one(player, item_for_tier(old_tier)) end
+    if old then give_one(player, old.name, old.quality) end
     storage.equipped[idx] = nil
     recompute_force(player.force)
     update_slot(player)
     return
   end
 
-  local new_tier = logic.tier_of(chosen)
-  if not new_tier then
+  if not logic.tier_of(chosen.name) then
     update_slot(player)
     return
   end
-  if new_tier == old_tier then return end
+  if old and old.name == chosen.name and old.quality == chosen.quality then return end
 
-  -- Must own the chosen pickaxe (main inventory or cursor) to equip it.
-  if count_owned(player, chosen) < 1 then
+  if count_owned(player, chosen.name, chosen.quality) < 1 then
     player.print({ "bertorio.equip-missing" })
     update_slot(player)
     return
   end
 
-  -- Return the old one, consume the new one (from inventory or cursor).
-  if old_tier then give_one(player, item_for_tier(old_tier)) end
-  remove_one(player, chosen)
-  storage.equipped[idx] = new_tier
+  if old then give_one(player, old.name, old.quality) end
+  remove_one(player, chosen.name, chosen.quality)
+  storage.equipped[idx] = { name = chosen.name, quality = chosen.quality }
   recompute_force(player.force)
   update_slot(player)
 end
