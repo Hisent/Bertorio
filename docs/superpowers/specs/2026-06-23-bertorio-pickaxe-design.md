@@ -73,7 +73,7 @@ Recipe costs are defaults, tunable later.
 
 ### Mining-speed mechanic
 
-Mining speed is governed by `force.character_mining_speed_modifier`, which is
+Mining speed is governed by `force.manual_mining_speed_modifier`, which is
 **force-wide** (not per-player) — per-player speed is not natively possible
 without swapping character prototypes, which is out of scope.
 

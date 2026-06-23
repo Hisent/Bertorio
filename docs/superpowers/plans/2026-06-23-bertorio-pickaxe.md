@@ -13,7 +13,7 @@
 - `factorio_version` is `"2.0"`; target build 2.0.77; dependency `base >= 2.0.0`.
 - No runtime dependencies beyond `base` and `__core__` lualibs.
 - All mod-defined prototype names are prefixed `bertorio-`.
-- Speed comes from `force.character_mining_speed_modifier`, set **absolutely** (force-wide; per-player speed is not in scope).
+- Speed comes from `force.manual_mining_speed_modifier`, set **absolutely** (force-wide; per-player speed is not in scope).
 - Tier→modifier: T1=`1.0` (2×), T2=`2.0` (3×), T3=`3.0` (4×), none=`0.0`.
 - Material drops only on hand-mining resources (`on_player_mined_entity`, `entity.type == "resource"`).
 - Recipes are enabled from game start (no research gating).
@@ -87,7 +87,7 @@ function logic.tier_of(item_name)
   return logic.TIER_BY_ITEM[item_name]
 end
 
--- tier value doubles as the character_mining_speed_modifier (T1->+1.0 = 2x ...)
+-- tier value doubles as the manual_mining_speed_modifier (T1->+1.0 = 2x ...)
 function logic.modifier_for(tier)
   return tier or 0
 end
@@ -351,7 +351,7 @@ local function recompute_force(force)
       end
     end
   end
-  force.character_mining_speed_modifier = logic.modifier_for(logic.max_tier(tiers))
+  force.manual_mining_speed_modifier = logic.modifier_for(logic.max_tier(tiers))
 end
 
 local function recompute_for_player(player_index)
