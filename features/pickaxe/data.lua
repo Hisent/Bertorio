@@ -2,7 +2,7 @@ local function item(name, icon)
   return {
     type = "item",
     name = name,
-    icon = "__base__/graphics/icons/" .. icon,
+    icon = icon,
     icon_size = 64,
     stack_size = 50,
     subgroup = "intermediate-product",
@@ -10,14 +10,17 @@ local function item(name, icon)
   }
 end
 
+local G = "__bertorio__/features/pickaxe/graphics/"
+local B = "__base__/graphics/icons/"
+
 data:extend({
-  -- pickaxe tiers (inventory tokens; reuse repair-pack icon)
-  item("bertorio-pickaxe-1", "repair-pack.png"),
-  item("bertorio-pickaxe-2", "repair-pack.png"),
-  item("bertorio-pickaxe-3", "repair-pack.png"),
-  -- upgrade materials
-  item("bertorio-upgrade-material-1", "advanced-circuit.png"),
-  item("bertorio-upgrade-material-2", "processing-unit.png"),
+  -- pickaxe tiers (own tier-colored icons)
+  item("bertorio-pickaxe-1", G .. "pickaxe-1.png"),
+  item("bertorio-pickaxe-2", G .. "pickaxe-2.png"),
+  item("bertorio-pickaxe-3", G .. "pickaxe-3.png"),
+  -- upgrade materials (reuse base icons)
+  item("bertorio-upgrade-material-1", B .. "advanced-circuit.png"),
+  item("bertorio-upgrade-material-2", B .. "processing-unit.png"),
 
   -- recipes (available from start)
   {
