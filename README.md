@@ -5,9 +5,14 @@ A Factorio 2.0 mod: a small feature-docking framework plus a craftable,
 
 ## Features
 
-- **Pickaxe** — craft `Pickaxe Mk1` (10 iron plates) to hand-mine ore at 2×.
-  Upgrade to Mk2 (3×) and Mk3 (4×) using Alloy / Crystal that drop while
-  mining ore. Speed is force-wide and active only while a pickaxe is carried.
+- **Pickaxe** — craft `Pickaxe Mk1` (10 iron plates); upgrade to Mk2 / Mk3
+  using Alloy / Crystal that drop while hand-mining ore.
+- **Equip slot** — open the character screen (`E`); a "Pickaxe" slot appears on
+  the right. Equip a pickaxe there to gain its mining-speed bonus
+  (Mk1 2×, Mk2 3×, Mk3 4×). Equipping takes the pickaxe out of your inventory;
+  the bonus is force-wide and applies only while equipped.
+- **`/bertorio-cheat`** — gives a test kit (100 iron plates + 50/50 upgrade
+  materials). Disables achievements (vanilla console-command behavior).
 
 ## Install (dev)
 
