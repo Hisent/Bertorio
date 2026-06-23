@@ -1,0 +1,1 @@
+-- Equipment feature has no prototypes; it adds a GUI + control logic only.
