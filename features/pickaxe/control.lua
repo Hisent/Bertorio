@@ -17,7 +17,7 @@ local function recompute_force(force)
       end
     end
   end
-  force.character_mining_speed_modifier = logic.modifier_for(logic.max_tier(tiers))
+  force.manual_mining_speed_modifier = logic.modifier_for(logic.max_tier(tiers))
 end
 
 local function recompute_for_player(player_index)
