@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------------------------------
+Version: 0.1.0
+Date: 2026-06-23
+  Features:
+    - Pickaxe Mk1/Mk2/Mk3 craftable; grants hand-mining speed bonus (2x / 3x / 4x).
+    - Upgrade materials (Alloy, Crystal) drop while hand-mining ore; used to craft Mk2/Mk3.
+    - Character-screen equip slot: the speed bonus applies only while a pickaxe is equipped.
+    - /bertorio-cheat console command gives a test kit (100 iron plates + 50/50 materials).
+  Graphics:
+    - Custom tier icons for the three pickaxes and the two upgrade materials.
+  Info:
+    - Feature-docking framework built on the core event_handler library.
