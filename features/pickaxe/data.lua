@@ -1,10 +1,10 @@
-local function item(name, icon)
+local function item(name, icon, stack)
   return {
     type = "item",
     name = name,
     icon = icon,
     icon_size = 64,
-    stack_size = 50,
+    stack_size = stack or 50,
     subgroup = "intermediate-product",
     order = name,
   }
@@ -13,10 +13,10 @@ end
 local G = "__bertorio__/features/pickaxe/graphics/"
 
 data:extend({
-  -- pickaxe tiers (own tier-colored icons)
-  item("bertorio-pickaxe-1", G .. "pickaxe-1.png"),
-  item("bertorio-pickaxe-2", G .. "pickaxe-2.png"),
-  item("bertorio-pickaxe-3", G .. "pickaxe-3.png"),
+  -- pickaxe tiers (own tier-colored icons; not stackable)
+  item("bertorio-pickaxe-1", G .. "pickaxe-1.png", 1),
+  item("bertorio-pickaxe-2", G .. "pickaxe-2.png", 1),
+  item("bertorio-pickaxe-3", G .. "pickaxe-3.png", 1),
   -- upgrade materials (own icons)
   item("bertorio-upgrade-material-1", G .. "material-1.png"),
   item("bertorio-upgrade-material-2", G .. "material-2.png"),

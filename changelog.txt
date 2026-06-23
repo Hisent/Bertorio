@@ -10,6 +10,9 @@ Date: 2026-06-23
   Bugfixes:
     - Equipping works when holding the pickaxe on the cursor, not only from the main inventory.
     - A returned pickaxe spills on the ground instead of being lost when the inventory is full.
+  Changes:
+    - The equip chooser only lists pickaxe tiers you currently own.
+    - Pickaxes no longer stack (stack size 1).
   Graphics:
     - Custom tier icons for the three pickaxes and the two upgrade materials.
   Info:
