@@ -1,5 +1,7 @@
 # Bertorio
 
+<img src="thumbnail.png" width="128" align="right" alt="Bertorio icon" />
+
 A small **Factorio 2.0** mod: a craftable, upgradeable **pickaxe** that speeds
 up hand-mining — plus a lightweight **framework** for docking further features
 onto. Built and tested against Factorio **2.0.77**.

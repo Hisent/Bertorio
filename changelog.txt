@@ -16,5 +16,6 @@ Date: 2026-06-23
     - Slightly raised default drop chances (Alloy 0.04, Crystal 0.012).
   Graphics:
     - Custom tier icons for the three pickaxes and the two upgrade materials.
+    - Mod thumbnail.
   Info:
     - Feature-docking framework built on the core event_handler library.
