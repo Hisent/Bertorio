@@ -13,6 +13,7 @@ Date: 2026-06-23
   Changes:
     - The equip chooser only lists pickaxe tiers you currently own.
     - Pickaxes no longer stack (stack size 1).
+    - Slightly raised default drop chances (Alloy 0.04, Crystal 0.012).
   Graphics:
     - Custom tier icons for the three pickaxes and the two upgrade materials.
   Info:

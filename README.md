@@ -58,8 +58,8 @@ All recipes are available from the start (no research).
 
 | Setting | Default | Meaning |
 |---------|---------|---------|
-| Pickaxe Alloy drop chance | 0.02 | chance per ore mined to drop an Alloy |
-| Pickaxe Crystal drop chance | 0.005 | chance per ore mined to drop a Crystal |
+| Pickaxe Alloy drop chance | 0.04 | chance per ore mined to drop an Alloy |
+| Pickaxe Crystal drop chance | 0.012 | chance per ore mined to drop a Crystal |
 
 ## Console commands
 
