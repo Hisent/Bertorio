@@ -18,8 +18,8 @@ local function ensure_render(player)
   local idx = player.index
   local r = storage.bert_render[idx]
   if r and r.valid then return end
-  storage.bert_render[idx] = rendering.draw_sprite({
-    sprite = "bertorio-bert",
+  storage.bert_render[idx] = rendering.draw_animation({
+    animation = "bertorio-bert",
     target = { entity = player.character, offset = { 1.2, -1.5 } },
     surface = player.surface,
     x_scale = 0.4,
@@ -104,6 +104,21 @@ local function on_tick30()
   end
 end
 
+-- Move Bert around the player on an ellipse (game.tick-driven = deterministic).
+local function on_orbit()
+  if not storage.bert_render then return end
+  for _, player in pairs(game.connected_players) do
+    local r = storage.bert_render[player.index]
+    if r and r.valid and player.character then
+      local a = game.tick * 0.06
+      r.target = {
+        entity = player.character,
+        offset = { math.cos(a) * 1.6, math.sin(a) * 0.9 - 0.6 },
+      }
+    end
+  end
+end
+
 local function init()
   storage.bert_render = storage.bert_render or {}
   storage.bert_last = storage.bert_last or {}
@@ -115,5 +130,5 @@ return {
   events = {
     [defines.events.on_player_mined_entity] = on_mined,
   },
-  on_nth_tick = { [30] = on_tick30 },
+  on_nth_tick = { [3] = on_orbit, [30] = on_tick30 },
 }
