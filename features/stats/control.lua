@@ -4,8 +4,21 @@ local mod_gui = require("__core__.lualib.mod-gui")
 local BUTTON = "bertorio-stats-toggle"
 local FRAME = "bertorio-stats-frame"
 
+local function enabled()
+  return settings.global["bertorio-stats-enabled"].value
+end
+
+local function remove_gui(player)
+  if not player then return end
+  local flow = mod_gui.get_button_flow(player)
+  if flow[BUTTON] then flow[BUTTON].destroy() end
+  local frame = player.gui.screen[FRAME]
+  if frame then frame.destroy() end
+end
+
 local function build_button(player)
   if not player then return end
+  if not enabled() then remove_gui(player); return end
   local flow = mod_gui.get_button_flow(player)
   if flow[BUTTON] then return end
   flow.add({ type = "button", name = BUTTON, caption = { "bertorio.stats-button" } })
@@ -63,6 +76,11 @@ local function setup()
   for _, player in pairs(game.players) do build_button(player) end
 end
 
+local function on_setting_changed(event)
+  if event.setting ~= "bertorio-stats-enabled" then return end
+  for _, player in pairs(game.players) do build_button(player) end
+end
+
 return {
   on_init = setup,
   on_configuration_changed = setup,
@@ -71,5 +89,6 @@ return {
     [defines.events.on_player_joined_game] = on_player_setup,
     [defines.events.on_gui_click] = on_click,
     [defines.events.on_player_mined_entity] = on_mined,
+    [defines.events.on_runtime_mod_setting_changed] = on_setting_changed,
   },
 }

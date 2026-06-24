@@ -48,4 +48,11 @@ data:extend({
     default_value = true,
     order = "f",
   },
+  {
+    type = "bool-setting",
+    name = "bertorio-stats-enabled",
+    setting_type = "runtime-global",
+    default_value = false,
+    order = "g",
+  },
 })
