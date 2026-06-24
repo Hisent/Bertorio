@@ -24,6 +24,11 @@ function logic.effective_tier(tier, qlevel)
   return math.min((tier or 0) + (qlevel or 0), 3)
 end
 
+-- True when `interval` ticks have passed since `last` (nil last = never -> due).
+function logic.due(now, last, interval)
+  return (now - (last or 0)) >= interval
+end
+
 -- highest tier in a dense list (no nil holes); 0 if empty
 function logic.max_tier(tiers)
   local best = 0

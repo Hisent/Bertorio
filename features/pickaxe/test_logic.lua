@@ -18,6 +18,11 @@ assert(logic.effective_tier(3, 2) == 3)
 assert(logic.effective_tier(0, 1) == 1)
 assert(logic.effective_tier(1, nil) == 1)
 
+assert(logic.due(120, 0, 120) == true)
+assert(logic.due(119, 0, 120) == false)
+assert(logic.due(250, 120, 120) == true)
+assert(logic.due(120, nil, 120) == true)
+
 assert(logic.max_tier({}) == 0)
 assert(logic.max_tier({1}) == 1)
 assert(logic.max_tier({1, 3, 2}) == 3)
