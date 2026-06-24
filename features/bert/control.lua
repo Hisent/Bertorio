@@ -110,10 +110,10 @@ local function on_orbit()
   for _, player in pairs(game.connected_players) do
     local r = storage.bert_render[player.index]
     if r and r.valid and player.character then
-      local a = game.tick * 0.06
+      local a = game.tick * 0.05
       r.target = {
         entity = player.character,
-        offset = { math.cos(a) * 1.6, math.sin(a) * 0.9 - 0.6 },
+        offset = { math.cos(a) * 3.0, math.sin(a) * 1.7 - 0.6 },
       }
     end
   end
