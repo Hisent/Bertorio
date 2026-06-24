@@ -19,6 +19,9 @@ onto. Built and tested against Factorio **2.0.77**.
   each find.
 - **`/bertorio-cheat`** — gives a test kit (100 iron plates + 50 Alloy +
   50 Crystal) so you can try everything without grinding.
+- **Bert the mining buddy** — a bee companion appears while you have a pickaxe
+  equipped and mines nearby ore for you (on a chance per mine and on a timer).
+  Toggle and tune him in Map settings.
 - **Stats window** — a top-left *Bertorio Stats* button shows ore mined,
   materials collected, and your streak toward the next guaranteed drop.
 - **Cycle hotkey** — bind *Cycle Bertorio pickaxe* in Controls to swap tiers

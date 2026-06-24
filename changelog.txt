@@ -12,6 +12,8 @@ Date: 2026-06-23
     - Drop sound, live equip-slot bonus tooltip, cycle-equip hotkey.
     - Stats window (top-left button): ore mined, materials collected, streaks.
       Off by default; enable via the "Show Bertorio stats button" setting.
+    - Bert the mining buddy: a bee that follows you and mines nearby ore while a
+      pickaxe is equipped (chance per mine + timed). Configurable in settings.
   Bugfixes:
     - Equipping works when holding the pickaxe on the cursor, not only from the main inventory.
     - A returned pickaxe spills on the ground instead of being lost when the inventory is full.
