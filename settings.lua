@@ -55,4 +55,28 @@ data:extend({
     default_value = false,
     order = "g",
   },
+  {
+    type = "bool-setting",
+    name = "bertorio-bert-enabled",
+    setting_type = "runtime-global",
+    default_value = true,
+    order = "h",
+  },
+  {
+    type = "double-setting",
+    name = "bertorio-bert-mine-chance",
+    setting_type = "runtime-global",
+    default_value = 0.2,
+    minimum_value = 0,
+    maximum_value = 1,
+    order = "i",
+  },
+  {
+    type = "int-setting",
+    name = "bertorio-bert-interval",
+    setting_type = "runtime-global",
+    default_value = 120,
+    minimum_value = 30,
+    order = "j",
+  },
 })
